@@ -32,7 +32,7 @@ def screen_record(duration=10, interval=1, output_folder="screenshots"):
     print("Screen recording completed.")
 
 API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer "}
 
 def query(folder="screenshots"):
     text = ""
