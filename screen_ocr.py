@@ -14,8 +14,8 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 # Flag to control the recording process
 is_recording = 0  # Initialize to 0 (not recording)
 
-def screen_record(duration=10, interval=1, output_folder="screenshots"):
-    global is_recording
+def screen_record(duration, interval, output_folder="screenshots"):
+    is_recording
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     
@@ -58,12 +58,12 @@ def extract_text_from_image(image_path):
     return extracted_text
 
 def start_recording(duration, interval):
-    global is_recording
+    is_recording
     is_recording = 1  # Set the flag to allow recording
     screen_record(duration, interval)
 
 def stop_recording():
-    global is_recording
+    is_recording
     is_recording = 0  # Set the flag to stop recording
 
 if __name__ == "__main__":
