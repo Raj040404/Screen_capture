@@ -1,0 +1,11 @@
+{
+    "dependencies": [
+        "pyautogui",
+        "opencv-python",
+        "pillow",
+        "pytesseract",
+        "numpy",
+        "requests",
+        "flask"
+    ]
+}

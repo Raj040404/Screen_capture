@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Recorder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"],
+        input[type="number"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #message {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Screen Recorder</h2>
+    <label for="interval">Interval (in seconds):</label>
+    <input type="number" id="interval" min="1" required>
+
+    <label for="duration-min">Duration (Minutes):</label>
+    <input type="number" id="duration-min" min="0" required>
+
+    <label for="duration-sec">Duration (Seconds):</label>
+    <input type="number" id="duration-sec" min="0" max="59" required>
+
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn">Stop Recording</button>
+
+    <div id="message" style="margin-top: 20px;"></div>
+</div>
+
+<script>
+    document.getElementById('startBtn').addEventListener('click', function () {
+        const interval = document.getElementById('interval').value;
+        const durationMin = document.getElementById('duration-min').value;
+        const durationSec = document.getElementById('duration-sec').value;
+
+        const duration = parseInt(durationMin) * 60 + parseInt(durationSec);
+
+        fetch('/start', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ interval: interval, duration: duration })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').innerText = data.message;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('message').innerText = 'Error starting recording.';
+        });
+    });
+
+    document.getElementById('stopBtn').addEventListener('click', function () {
+        fetch('/stop', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').innerText = data.message;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('message').innerText = 'Error stopping recording.';
+        });
+    });
+</script>
+
+</body>
+</html>
